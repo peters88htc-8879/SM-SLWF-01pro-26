@@ -1,0 +1,55 @@
+esphome:
+  name: smlight-ac
+  friendly_name: Klimatizace Airwell
+
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: esp32s3
+  framework:
+    type: esp-idf
+
+wifi:
+  ssid: "NÁZEV_VAŠÍ_WIFI"
+  password: "HESLO_VAŠÍ_WIFI"
+  ap:
+    ssid: "AC-wifi-Airwell"
+    password: "slwf01pro"
+
+mdns:
+  disabled: false
+
+web_server:
+  port: 80
+  version: 2
+
+api:
+
+ota:
+  - platform: esphome
+
+uart:
+  tx_pin: GPIO11
+  rx_pin: GPIO3
+  baud_rate: 9600
+
+climate:
+  - platform: midea_ac
+    name: "Klimatizace"
+    id: airwell_ac
+    beeper: true
+
+switch:
+  - platform: template
+    name: "Shelly Rele Ovladani"
+    id: shelly_relay_0
+    optimistic: true
+    assumed_state: true
+    turn_on_action:
+      - climate.control:
+          id: airwell_ac
+          mode: COOL
+          target_temperature: 23 °C
+    turn_off_action:
+      - climate.control:
+          id: airwell_ac
+          mode: 'OFF'
