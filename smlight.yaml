@@ -28,11 +28,11 @@ ota:
 
 uart:
   tx_pin: GPIO11
-  rx_pin: GPIO3
+  rx_pin: GPIO12
   baud_rate: 9600
 
 climate:
-  - platform: midea_ac
+  - platform: midea
     name: "Klimatizace"
     id: airwell_ac
     beeper: true
